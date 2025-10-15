@@ -1,7 +1,7 @@
 [project]
 name = "steamwheel"
 version = "0.1.0"
-description = "Add your description here"
+description = "Backend FastAPI for SteamWheel API. A project to get random games from Steam."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
