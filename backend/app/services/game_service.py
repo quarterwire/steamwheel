@@ -8,8 +8,12 @@ from app.db.db import jsonData
 def get_game_by_id(game_id: int) -> Data:
     api_url = config.STEAM_API_GET_GAME + str(game_id)
     res = requests.get(api_url).json()
+    print("get_Game", res, api_url)
+    if not res:
+        return {"err": "try again"}
     if not res[str(game_id)]["success"]:
         return {"err": "not found"}
+
     game = Data.model_validate(res[str(game_id)]["data"])
     return game
 
@@ -21,9 +25,14 @@ async def get_random_game():
 
         res = random.choice(jsonData["applist"]["apps"])
         game = get_game_by_id(res["appid"])
-        print(game)
 
         if isinstance(game, dict) and game.get("err"):
+            continue
+        if "Playtest" in game.name:
+            continue
+        if not game.recommendations:
+            continue
+        if game.recommendations.total < 5:
             continue
 
         if game and game.type not in [

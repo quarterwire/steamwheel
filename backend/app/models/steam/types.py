@@ -27,8 +27,8 @@ class Platforms(BaseModel):
 
 # ----- Metacritic -----
 class Metacritic(BaseModel):
-    score: int
-    url: str
+    score: int | None
+    url: str | None
 
 
 # ----- Categories / Genres -----
@@ -165,7 +165,7 @@ class Data(BaseModel):
     release_date: Optional[ReleaseDate] = None
     background: Optional[str] = None
     background_raw: Optional[str] = None
-    ratings: Optional[Ratings] = None
+    ratings: Optional[Ratings] = None | str
 
     # --- Validators to normalize inconsistent data ---
     @field_validator(
